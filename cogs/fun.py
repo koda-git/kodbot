@@ -1,15 +1,11 @@
+import discord
 from discord.ext import commands
 import random
 
-class MainCommands(commands.Cog):
+class FunCommands(commands.Cog):
+  
   def __init__(self, bot):
     self.bot = bot
-    
-
-  @commands.command()
-  async def rollin(self, ctx, arg): #no touch
-      await ctx.send(random.randint(1,int(arg)))
-
 
   @commands.command()
   async def pick(ctx, first: str, second: str):
@@ -19,22 +15,29 @@ class MainCommands(commands.Cog):
    else:
     await ctx.send(second)
 
+  @commands.command()
+  async def embed(self,ctx):
+    embed=discord.Embed(title="Click here!!", url="https://kodev.xyz", description="My website is here lol",color=discord.Color.blue(), 
+    )
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/730675910130270229/899890276267589652/Shime_pixel.png")
+    embed.set_footer(text="qweqwe")
 
 
-
+    embed.add_field(name="This is a field", value="Who? Who asked", inline=False) # Fields are set by how they are arranged in order / idk what inline does.
+    embed.add_field(name="I am bored", value="yes", inline=True)
+    
+    await ctx.send(embed=embed)
+  
+  
   @commands.command()
   async def secret(self, ctx):  
+    with open('./images/squid.jpg', 'rb') as f:
+      picture = discord.File(f)
+    await ctx.send(file=picture)
+  
 
-   r = random.randint(1,4)
-   if r==1 :
-    await ctx.send(file=discord.File('./images/squid.jpg'))
-   else : 
-    await ctx.send("Sorry you don't deserve to know")
-
-
-
-  @commands.command()
-  @bot.command(aliases=['8ball'])
+ 
+  @commands.command(aliases=['8ball'])
   async def _8ball(self, ctx, *, question):
   
   
@@ -64,7 +67,7 @@ class MainCommands(commands.Cog):
   
 
 def setup(bot):
-    bot.add_cog(MainCommands(bot))
+    bot.add_cog(FunCommands(bot))
 
 
 
